@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Liens & Raccourcis</title>
-    <!-- Google Font pour une typographie moderne -->
+    <title>Mon Dashboard Personnel</title>
+
+    <!-- Google Fonts & FontAwesome pour les icônes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-hover-bg: rgba(51, 65, 85, 0.8);
+            --bg-color: #0b0f19;
+            --card-bg: rgba(23, 32, 51, 0.65);
+            --card-hover-bg: rgba(34, 48, 74, 0.85);
             --border-color: rgba(255, 255, 255, 0.08);
             --accent-color: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -30,27 +33,111 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.12) 0px, transparent 50%);
+                radial-gradient(at 10% 10%, rgba(56, 189, 248, 0.15) 0px, transparent 40%),
+                radial-gradient(at 90% 90%, rgba(129, 140, 248, 0.15) 0px, transparent 40%),
+                radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 60%);
             background-attachment: fixed;
             color: var(--text-main);
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px 60px 20px;
             min-height: 100vh;
         }
 
-        h1 {
+        /* --- HEADER & HORLOGE --- */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 35px;
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
         }
 
+        .horloge {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .date-du-jour {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+        }
+
+        /* --- BARRE DE RECHERCHE --- */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            margin-bottom: 25px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* --- FILTRES DE CATÉGORIES --- */
+        .categories {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-categorie {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-categorie:hover, .btn-categorie.active {
+            background: var(--accent-color);
+            color: #0b0f19;
+            border-color: var(--accent-color);
+            font-weight: 600;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* --- GRILLE DE CARTES --- */
         .grille-liens {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -72,14 +159,15 @@
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         .carte-lien:hover {
+            transform: translateY(-50px);
             transform: translateY(-4px);
             background: var(--card-hover-bg);
             border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 12px 25px -5px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
         }
 
         .carte-header {
@@ -89,16 +177,28 @@
             margin-bottom: 12px;
         }
 
+        .icon-container {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
         .favicon {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
             object-fit: contain;
-            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .carte-titre {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--text-main);
             white-space: nowrap;
@@ -107,119 +207,215 @@
         }
 
         .carte-description {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
             line-height: 1.4;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .carte-footer {
             display: flex;
             align-items: center;
-            font-size: 0.85rem;
+            justify-content: space-between;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--accent-color);
             margin-top: auto;
         }
 
-        .carte-footer span {
+        .tag-categorie {
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .carte-footer span.arrow {
             transition: transform 0.2s ease;
         }
 
-        .carte-lien:hover .carte-footer span {
+        .carte-lien:hover .carte-footer span.arrow {
             transform: translateX(4px);
         }
     </style>
 </head>
 <body>
 
-    <h1>Mes Liens & Raccourcis</h1>
+    <header>
+        <div class="horloge" id="horloge">00:00:00</div>
+        <div class="date-du-jour" id="date-du-jour">Chargement...</div>
 
-    <div id="conteneur-liens" class="grille-liens"></div>
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="recherche" class="search-bar" placeholder="Filtrer un raccourci ou taper une recherche..." autocomplete="off">
+        </div>
+
+        <div class="categories" id="conteneur-categories">
+            <button class="btn-categorie active" onclick="filtrerCategorie('tous')">Tous</button>
+            <button class="btn-categorie" onclick="filtrerCategorie('gaming')">Gaming</button>
+            <button class="btn-categorie" onclick="filtrerCategorie('systeme')">Système & NAS</button>
+            <button class="btn-categorie" onclick="filtrerCategorie('outils')">Outils & IA</button>
+        </div>
+    </header>
+
+    <main id="conteneur-liens" class="grille-liens"></main>
 
     <script>
+        // LISTE DE TES LIENS AVEC CATÉGORIES ET ICÔNES DE SECOURS
         const liens = [
             {
                 nom: "Tous les pilotes",
                 description: "Pilotes PC & Drivers",
-                url: "https://fichiers2.touslesdrivers.com/Mes_Drivers_3.0.4.exe"
+                url: "https://fichiers2.touslesdrivers.com/Mes_Drivers_3.0.4.exe",
+                categorie: "systeme",
+                iconSecours: "fa-solid fa-microchip"
             },
             {
                 nom: "Steam",
                 description: "Installer la plateforme Steam",
-                url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"
+                url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe",
+                categorie: "gaming",
+                iconSecours: "fa-brands fa-steam"
             },
             {
                 nom: "VALORANT",
                 description: "Installer le jeu VALORANT",
-                url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe"
+                url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe",
+                categorie: "gaming",
+                iconSecours: "fa-solid fa-gamepad"
             },
             {
                 nom: "Roblox",
                 description: "Installer le client Roblox",
-                url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs"
+                url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs",
+                categorie: "gaming",
+                iconSecours: "fa-solid fa-cube"
             },
             {
                 nom: "SkidrowReloaded",
                 description: "Jeux PC",
-                url: "https://www.skidrowreloaded.com/"
+                url: "https://www.skidrowreloaded.com/",
+                categorie: "gaming",
+                iconSecours: "fa-solid fa-skull-crossbones"
             },
             {
                 nom: "Valorant Guessr",
                 description: "Mini-jeu de devinettes Valo",
-                url: "https://vlr-guessr.pages.dev/"
+                url: "https://vlr-guessr.pages.dev/",
+                categorie: "gaming",
+                iconSecours: "fa-solid fa-crosshairs"
             },
             {
                 nom: "Neal.Fun",
                 description: "Expériences & mini-jeux interactifs",
-                url: "https://neal.fun/"
+                url: "https://neal.fun/",
+                categorie: "outils",
+                iconSecours: "fa-solid fa-wand-magic-sparkles"
             },
             {
                 nom: "Terramaster NAS",
                 description: "Interface de gestion locale du NAS",
-                url: "https://192.168.1.71:1624/tos/#/desktop"
+                url: "https://192.168.1.71:1624/tos/#/desktop",
+                categorie: "systeme",
+                iconSecours: "fa-solid fa-server"
             },
             {
                 nom: "Gemini",
                 description: "Assistant IA Google",
-                url: "https://gemini.google.com/app"
+                url: "https://gemini.google.com/app",
+                categorie: "outils",
+                iconSecours: "fa-solid fa-brain"
             }
         ];
 
-        const conteneur = document.getElementById("conteneur-liens");
+        let categorieActive = 'tous';
 
-        // Fonction pour extraire le domaine et afficher l'icône du site automatiquement
+        // --- HORLOGE & DATE ---
+        function mettreAJourHorloge() {
+            const maintenant = new Date();
+            document.getElementById('horloge').textContent = maintenant.toLocaleTimeString('fr-FR');
+            
+            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-du-jour').textContent = maintenant.toLocaleDateString('fr-FR', optionsDate);
+        }
+        setInterval(mettreAJourHorloge, 1000);
+        mettreAJourHorloge();
+
+        // --- FAVICON AUTOMATIQUE ---
         function getFaviconUrl(url) {
             try {
                 const parsedUrl = new URL(url);
+                if (parsedUrl.hostname.startsWith('192.168.') || parsedUrl.hostname === 'localhost') return '';
                 return `https://www.google.com/s2/favicons?domain=${parsedUrl.hostname}&sz=64`;
             } catch (e) {
                 return '';
             }
         }
 
-        // On filtre les éléments vides avant le rendu
-        const liensValides = liens.filter(lien => lien.nom.trim() !== "" && lien.url.trim() !== "");
-
-        conteneur.innerHTML = liensValides.map(lien => {
-            const favicon = getFaviconUrl(lien.url);
+        // --- RENDU DES CARTES ---
+        function afficherLiens(liste) {
+            const conteneur = document.getElementById("conteneur-liens");
             
-            return `
-                <a href="${lien.url}" target="_blank" class="carte-lien">
-                    <div>
-                        <div class="carte-header">
-                            ${favicon ? `<img src="${favicon}" alt="" class="favicon" onerror="this.style.display='none'">` : ''}
-                            <h2 class="carte-titre">${lien.nom}</h2>
-                        </div>
-                        <p class="carte-description">${lien.description}</p>
-                    </div>
-                    <div class="carte-footer">
-                        Ouvrir <span>&rarr;</span>
-                    </div>
-                </a>
-            `;
-        }).join('');
-    </script>
+            if(liste.length === 0) {
+                conteneur.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); margin-top: 20px;">Aucun raccourci ne correspond à votre recherche.</p>`;
+                return;
+            }
 
+            conteneur.innerHTML = liste.map(lien => {
+                const favicon = getFaviconUrl(lien.url);
+
+                const iconHtml = favicon ? 
+                    `<img src="${favicon}" alt="" class="favicon" onerror="this.outerHTML='<i class=\\'${lien.iconSecours}\\'></i>'">` :
+                    `<i class="${lien.iconSecours}"></i>`;
+
+                return `
+                    <a href="${lien.url}" target="_blank" class="carte-lien">
+                        <div>
+                            <div class="carte-header">
+                                <div class="icon-container">
+                                    ${iconHtml}
+                                </div>
+                                <h2 class="carte-titre">${lien.nom}</h2>
+                            </div>
+                            <p class="carte-description">${lien.description}</p>
+                        </div>
+                        <div class="carte-footer">
+                            <span class="tag-categorie">${lien.categorie}</span>
+                            <span>Ouvrir <span class="arrow">&rarr;</span></span>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        // --- FILTRES ET RECHERCHE ---
+        function filtrerCategorie(cat) {
+            categorieActive = cat;
+            document.querySelectorAll('.btn-categorie').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase().includes(cat) || (cat === 'tous' && btn.textContent === 'Tous'));
+            });
+            appliquerFiltres();
+        }
+
+        function appliquerFiltres() {
+            const recherche = document.getElementById('recherche').value.toLowerCase();
+            
+            const resultats = liens.filter(lien => {
+                const correspondCategorie = categorieActive === 'tous' || lien.categorie === categorieActive;
+                const correspondRecherche = lien.nom.toLowerCase().includes(recherche) || lien.description.toLowerCase().includes(recherche);
+                return correspondCategorie && correspondRecherche;
+            });
+
+            afficherLiens(resultats);
+        }
+
+        document.getElementById('recherche').addEventListener('input', appliquerFiltres);
+
+        // Premier affichage
+        afficherLiens(liens);
+    </script>
 </body>
 </html>
