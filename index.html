@@ -1,185 +1,225 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Liens & Raccourcis</title>
+    <!-- Google Font pour une typographie moderne -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<title>Mes liens</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-hover-bg: rgba(51, 65, 85, 0.8);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-color: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
 
-<style>
-body{
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: #121212;
-    color: white;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-h1{
-    text-align: center;
-    margin-bottom: 30px;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
 
-.carte{
-    background: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 15px;
-    margin: 15px 0;
-    transition: transform 0.2s;
-}
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
 
-.carte:hover{
-    transform: translateY(-2px);
-}
+        .grille-liens {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
 
-a{
-    color: #4da6ff;
-    text-decoration: none;
-    font-weight: bold;
-}
+        .carte-lien {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
 
-a:hover{
-    text-decoration: underline;
-}
-</style>
+        .carte-lien:hover {
+            transform: translateY(-4px);
+            background: var(--card-hover-bg);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.15);
+        }
 
+        .carte-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .favicon {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            object-fit: contain;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .carte-titre {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .carte-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .carte-footer {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: auto;
+        }
+
+        .carte-footer span {
+            transition: transform 0.2s ease;
+        }
+
+        .carte-lien:hover .carte-footer span {
+            transform: translateX(4px);
+        }
+    </style>
 </head>
 <body>
 
-<h1>Mes liens</h1>
+    <h1>Mes Liens & Raccourcis</h1>
 
-<div id="conteneur-liens"></div>
+    <div id="conteneur-liens" class="grille-liens"></div>
 
-<script>
+    <script>
+        const liens = [
+            {
+                nom: "Tous les pilotes",
+                description: "Pilotes PC & Drivers",
+                url: "https://fichiers2.touslesdrivers.com/Mes_Drivers_3.0.4.exe"
+            },
+            {
+                nom: "Steam",
+                description: "Installer la plateforme Steam",
+                url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"
+            },
+            {
+                nom: "VALORANT",
+                description: "Installer le jeu VALORANT",
+                url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe"
+            },
+            {
+                nom: "Roblox",
+                description: "Installer le client Roblox",
+                url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs"
+            },
+            {
+                nom: "SkidrowReloaded",
+                description: "Jeux PC",
+                url: "https://www.skidrowreloaded.com/"
+            },
+            {
+                nom: "Valorant Guessr",
+                description: "Mini-jeu de devinettes Valo",
+                url: "https://vlr-guessr.pages.dev/"
+            },
+            {
+                nom: "Neal.Fun",
+                description: "Expériences & mini-jeux interactifs",
+                url: "https://neal.fun/"
+            },
+            {
+                nom: "Terramaster NAS",
+                description: "Interface de gestion locale du NAS",
+                url: "https://192.168.1.71:1624/tos/#/desktop"
+            },
+            {
+                nom: "Gemini",
+                description: "Assistant IA Google",
+                url: "https://gemini.google.com/app"
+            }
+        ];
 
-const liens = [
+        const conteneur = document.getElementById("conteneur-liens");
 
-    {
-        nom: "Tous les pilotes",
-        description: "Pilotes PC",
-        url: "https://fichiers2.touslesdrivers.com/Mes_Drivers_3.0.4.exe"
-    },
+        // Fonction pour extraire le domaine et afficher l'icône du site automatiquement
+        function getFaviconUrl(url) {
+            try {
+                const parsedUrl = new URL(url);
+                return `https://www.google.com/s2/favicons?domain=${parsedUrl.hostname}&sz=64`;
+            } catch (e) {
+                return '';
+            }
+        }
 
-    {
-        nom: "Steam",
-        description: "Installer Steam",
-        url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe"
-    },
+        // On filtre les éléments vides avant le rendu
+        const liensValides = liens.filter(lien => lien.nom.trim() !== "" && lien.url.trim() !== "");
 
-    {
-        nom: "VALORANT",
-        description: "Installer VALORANT",
-        url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe"
-    },
-
-    {
-        nom: "Roblox",
-        description: "Installer Roblox",
-        url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs"
-    },
-
-    {
-        nom: "skidrowreloaded",
-        description: "jeu crack",
-        url: "https://www.skidrowreloaded.com/"
-    },
-
-    {
-        nom: "valorant guessr",
-        description: "valo",
-        url: "https://vlr-guessr.pages.dev/"
-    },
-
-    {
-        nom: "Neal.Fun",
-        description: "Mini Jeu",
-        url: "https://neal.fun/"
-    },
-
-    {
-        nom: "Terramaster",
-        description: "Nas",
-        url: "https://192.168.1.71:1624/tos/#/desktop"
-    },
-
-    {
-        nom: "Gemini",
-        description: "AI",
-        url: "https://gemini.google.com/app"
-    },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-     },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-    },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
- },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-    },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-    },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-     },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-    },
-
-    {
-        nom: "",
-        description: "",
-        url: ""
-    }
-];
-
-const conteneur = document.getElementById("conteneur-liens");
-
-liens.forEach(lien => {
-
-    if(lien.nom !== ""){
-
-        conteneur.innerHTML += `
-            <div class="carte">
-                <h2>${lien.nom}</h2>
-                <p>${lien.description}</p>
-                <a href="${lien.url}" target="_blank">
-                    Ouvrir
+        conteneur.innerHTML = liensValides.map(lien => {
+            const favicon = getFaviconUrl(lien.url);
+            
+            return `
+                <a href="${lien.url}" target="_blank" class="carte-lien">
+                    <div>
+                        <div class="carte-header">
+                            ${favicon ? `<img src="${favicon}" alt="" class="favicon" onerror="this.style.display='none'">` : ''}
+                            <h2 class="carte-titre">${lien.nom}</h2>
+                        </div>
+                        <p class="carte-description">${lien.description}</p>
+                    </div>
+                    <div class="carte-footer">
+                        Ouvrir <span>&rarr;</span>
+                    </div>
                 </a>
-            </div>
-        `;
-
-    }
-
-});
-
-</script>
+            `;
+        }).join('');
+    </script>
 
 </body>
 </html>
