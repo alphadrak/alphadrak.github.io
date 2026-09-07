@@ -1,4 +1,166 @@
-<!DOCTYPE html>
+<script>
+    // LISTE DE TES LIENS AVEC CATÉGORIES ET ICÔNES DÉDIÉES
+    const liens = [
+        {
+            nom: "Tous les pilotes",
+            description: "Pilotes PC & Drivers",
+            url: "https://fichiers2.touslesdrivers.com/Mes_Drivers_3.0.4.exe",
+            categorie: "systeme",
+            iconSecours: "fa-solid fa-microchip"
+        },
+        {
+            nom: "Steam",
+            description: "Installer la plateforme Steam",
+            url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe",
+            categorie: "gaming",
+            iconSecours: "fa-brands fa-steam"
+        },
+        {
+            nom: "VALORANT",
+            description: "Installer le jeu VALORANT",
+            url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe",
+            categorie: "gaming",
+            iconSecours: "fa-solid fa-gamepad"
+        },
+        {
+            nom: "Roblox",
+            description: "Installer le client Roblox",
+            url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs",
+            categorie: "gaming",
+            iconSecours: "fa-solid fa-cube"
+        },
+        {
+            nom: "SkidrowReloaded",
+            description: "Jeux PC",
+            url: "https://www.skidrowreloaded.com/",
+            categorie: "gaming",
+            iconSecours: "fa-solid fa-skull-crossbones"
+        },
+        {
+            nom: "Valorant Guessr",
+            description: "Mini-jeu de devinettes Valo",
+            url: "https://vlr-guessr.pages.dev/",
+            categorie: "gaming",
+            iconSecours: "fa-solid fa-crosshairs"
+        },
+        {
+            nom: "Neal.Fun",
+            description: "Expériences & mini-jeux interactifs",
+            url: "https://neal.fun/",
+            categorie: "outils",
+            iconSecours: "fa-solid fa-wand-magic-sparkles"
+        },
+        {
+            nom: "Terramaster NAS",
+            description: "Interface de gestion locale du NAS",
+            url: "https://192.168.1.71:1624/tos/#/desktop",
+            categorie: "systeme",
+            iconSecours: "fa-solid fa-server"
+        },
+        {
+            nom: "Gemini",
+            description: "Assistant IA Google",
+            url: "https://gemini.google.com/app",
+            categorie: "outils",
+            iconSecours: "fa-solid fa-brain"
+        }
+    ];
+
+    let categorieActive = 'tous';
+
+    // --- HORLOGE SANS LES SECONDES & DATE ---
+    function mettreAJourHorloge() {
+        const maintenant = new Date();
+        // Affichage des heures et minutes uniquement (HH:MM)
+        document.getElementById('horloge').textContent = maintenant.toLocaleTimeString('fr-FR', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date-du-jour').textContent = maintenant.toLocaleDateString('fr-FR', optionsDate);
+    }
+    setInterval(mettreAJourHorloge, 1000);
+    mettreAJourHorloge();
+
+    // --- DÉTECTION ET AFFICHAGE DES ICÔNES ---
+    function genererIconeHtml(lien) {
+        try {
+            const parsedUrl = new URL(lien.url);
+            const isLocal = parsedUrl.hostname.startsWith('192.168.') || parsedUrl.hostname === 'localhost';
+            const isDirectFile = parsedUrl.pathname.endsWith('.exe') || parsedUrl.pathname.endsWith('.zip');
+
+            // Pour les adresses IP ou les téléchargements directs d'exécutables, on utilise l'icône FontAwesome
+            if (isLocal || isDirectFile) {
+                return `<i class="${lien.iconSecours}"></i>`;
+            }
+
+            // Sinon on charge la Favicon Google avec une icône de secours transparente au cas où
+            const faviconUrl = `https://www.google.com/s2/favicons?domain=${parsedUrl.hostname}&sz=64`;
+            return `<img src="${faviconUrl}" alt="" class="favicon" onerror="this.replaceWith(document.createRange().createContextualFragment('<i class=\\'${lien.iconSecours}\\'></i>'))">`;
+        } catch (e) {
+            return `<i class="${lien.iconSecours}"></i>`;
+        }
+    }
+
+    // --- RENDU DES CARTES ---
+    function afficherLiens(liste) {
+        const conteneur = document.getElementById("conteneur-liens");
+        
+        if(liste.length === 0) {
+            conteneur.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); margin-top: 20px;">Aucun raccourci ne correspond à votre recherche.</p>`;
+            return;
+        }
+
+        conteneur.innerHTML = liste.map(lien => {
+            const iconHtml = genererIconeHtml(lien);
+
+            return `
+                <a href="${lien.url}" target="_blank" class="carte-lien">
+                    <div>
+                        <div class="carte-header">
+                            <div class="icon-container">
+                                ${iconHtml}
+                            </div>
+                            <h2 class="carte-titre">${lien.nom}</h2>
+                        </div>
+                        <p class="carte-description">${lien.description}</p>
+                    </div>
+                    <div class="carte-footer">
+                        <span class="tag-categorie">${lien.categorie}</span>
+                        <span>Ouvrir <span class="arrow">&rarr;</span></span>
+                    </div>
+                </a>
+            `;
+        }).join('');
+    }
+
+    // --- FILTRES ET RECHERCHE ---
+    function filtrerCategorie(cat) {
+        categorieActive = cat;
+        document.querySelectorAll('.btn-categorie').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent.toLowerCase().includes(cat) || (cat === 'tous' && btn.textContent === 'Tous'));
+        });
+        appliquerFiltres();
+    }
+
+    function appliquerFiltres() {
+        const recherche = document.getElementById('recherche').value.toLowerCase();
+        
+        const resultats = liens.filter(lien => {
+            const correspondCategorie = categorieActive === 'tous' || lien.categorie === categorieActive;
+            const correspondRecherche = lien.nom.toLowerCase().includes(recherche) || lien.description.toLowerCase().includes(recherche);
+            return correspondCategorie && correspondRecherche;
+        });
+
+        afficherLiens(resultats);
+    }
+
+    document.getElementById('recherche').addEventListener('input', appliquerFiltres);
+
+    // Premier affichage
+    afficherLiens(liens);
+</script><!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
