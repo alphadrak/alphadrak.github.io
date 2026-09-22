@@ -177,8 +177,8 @@
         }
 
         .icon-container {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.06);
             display: flex;
@@ -187,12 +187,12 @@
             font-size: 1.1rem;
             color: var(--accent-color);
             flex-shrink: 0;
+            padding: 6px;
         }
 
         .favicon {
-            width: 22px;
-            height: 22px;
-            border-radius: 4px;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
@@ -278,6 +278,7 @@
                 description: "Installer la plateforme Steam",
                 url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe",
                 categorie: "gaming",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/steam.svg",
                 iconSecours: "fa-brands fa-steam"
             },
             {
@@ -285,6 +286,7 @@
                 description: "Installer le jeu VALORANT",
                 url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe",
                 categorie: "gaming",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/valorant.svg",
                 iconSecours: "fa-solid fa-gamepad"
             },
             {
@@ -292,6 +294,7 @@
                 description: "Installer le client Roblox",
                 url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs",
                 categorie: "gaming",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/roblox.svg",
                 iconSecours: "fa-solid fa-cube"
             },
             {
@@ -318,8 +321,9 @@
             {
                 nom: "WeMod",
                 description: "Application de mods et cheats pour jeux solo",
-                url: "https://api.wemod.com/download/direct",
+                url: "https://www.wemod.com/fr/download",
                 categorie: "gaming",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/wemod.svg",
                 iconSecours: "fa-solid fa-wand-magic"
             },
             {
@@ -334,6 +338,7 @@
                 description: "Assistant IA Google",
                 url: "https://gemini.google.com/app",
                 categorie: "outils",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlegemini.svg",
                 iconSecours: "fa-solid fa-brain"
             },
             {
@@ -341,6 +346,7 @@
                 description: "Assistant IA OpenAI",
                 url: "https://chatgpt.com",
                 categorie: "outils",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/openai.svg",
                 iconSecours: "fa-solid fa-robot"
             },
             {
@@ -348,6 +354,7 @@
                 description: "Installer l'application de streaming musical",
                 url: "https://download.scdn.co/SpotifySetup.exe",
                 categorie: "outils",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
                 iconSecours: "fa-brands fa-spotify"
             },
             {
@@ -355,6 +362,7 @@
                 description: "Installer l'application de discussion vocale et textuelle",
                 url: "https://discord.com/api/download?platform=win",
                 categorie: "outils",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg",
                 iconSecours: "fa-brands fa-discord"
             },
             {
@@ -362,6 +370,7 @@
                 description: "Installer le navigateur rapide et respectueux de la vie privée",
                 url: "https://download.mozilla.org/?product=firefox-stub&os=win&lang=fr",
                 categorie: "navigateurs",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/firefoxbrowser.svg",
                 iconSecours: "fa-brands fa-firefox-browser"
             },
             {
@@ -369,6 +378,7 @@
                 description: "Installer le navigateur rapide de Google",
                 url: "https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7BEB5A9C53-83A5-42E1-BF0B-E2A93A60EE91%7D%26lang%3Dfr%26browser%3D4%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26ap%3Dx64-stats-def_1%26installdataindex%3Dempty/update2/installers/ChromeSetup.exe",
                 categorie: "navigateurs",
+                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlechrome.svg",
                 iconSecours: "fa-brands fa-chrome"
             }
         ];
@@ -390,8 +400,13 @@
         setInterval(mettreAJourHorloge, 1000);
         mettreAJourHorloge();
 
-        // --- DÉTECTION DES ICÔNES ---
+        // --- DÉTECTION ET AFFICHAGE DES ICÔNES ---
         function genererIconeHtml(lien) {
+            // Si un logo sur-mesure est spécifié
+            if (lien.customLogo) {
+                return `<img src="${lien.customLogo}" alt="${lien.nom}" class="favicon" onerror="this.outerHTML='<i class=\\'${lien.iconSecours}\\'></i>'">`;
+            }
+
             try {
                 const parsedUrl = new URL(lien.url);
                 const isLocal = parsedUrl.hostname.startsWith('192.168.') || parsedUrl.hostname === 'localhost';
