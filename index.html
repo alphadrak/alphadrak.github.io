@@ -187,7 +187,7 @@
             font-size: 1.1rem;
             color: var(--accent-color);
             flex-shrink: 0;
-            padding: 6px;
+            padding: 5px;
         }
 
         .favicon {
@@ -278,7 +278,7 @@
                 description: "Installer la plateforme Steam",
                 url: "https://cdn.fastly.steamstatic.com/client/installer/SteamSetup.exe",
                 categorie: "gaming",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/steam.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg",
                 iconSecours: "fa-brands fa-steam"
             },
             {
@@ -286,7 +286,7 @@
                 description: "Installer le jeu VALORANT",
                 url: "https://valorant.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.live.eu.exe",
                 categorie: "gaming",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/valorant.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_submark.svg",
                 iconSecours: "fa-solid fa-gamepad"
             },
             {
@@ -294,7 +294,7 @@
                 description: "Installer le client Roblox",
                 url: "https://www.roblox.com/download/client?os=win&renderingPlatform=nextjs",
                 categorie: "gaming",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/roblox.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_2022.svg",
                 iconSecours: "fa-solid fa-cube"
             },
             {
@@ -323,7 +323,7 @@
                 description: "Application de mods et cheats pour jeux solo",
                 url: "https://www.wemod.com/fr/download",
                 categorie: "gaming",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/wemod.svg",
+                customLogo: "https://www.wemod.com/favicon.ico",
                 iconSecours: "fa-solid fa-wand-magic"
             },
             {
@@ -338,7 +338,7 @@
                 description: "Assistant IA Google",
                 url: "https://gemini.google.com/app",
                 categorie: "outils",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlegemini.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg",
                 iconSecours: "fa-solid fa-brain"
             },
             {
@@ -346,7 +346,7 @@
                 description: "Assistant IA OpenAI",
                 url: "https://chatgpt.com",
                 categorie: "outils",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/openai.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
                 iconSecours: "fa-solid fa-robot"
             },
             {
@@ -362,7 +362,7 @@
                 description: "Installer l'application de discussion vocale et textuelle",
                 url: "https://discord.com/api/download?platform=win",
                 categorie: "outils",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/fr/4/4f/Discord_Logo_sans_texte.svg",
                 iconSecours: "fa-brands fa-discord"
             },
             {
@@ -370,7 +370,7 @@
                 description: "Installer le navigateur rapide et respectueux de la vie privée",
                 url: "https://download.mozilla.org/?product=firefox-stub&os=win&lang=fr",
                 categorie: "navigateurs",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/firefoxbrowser.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg",
                 iconSecours: "fa-brands fa-firefox-browser"
             },
             {
@@ -378,7 +378,7 @@
                 description: "Installer le navigateur rapide de Google",
                 url: "https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7BEB5A9C53-83A5-42E1-BF0B-E2A93A60EE91%7D%26lang%3Dfr%26browser%3D4%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26ap%3Dx64-stats-def_1%26installdataindex%3Dempty/update2/installers/ChromeSetup.exe",
                 categorie: "navigateurs",
-                customLogo: "https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/googlechrome.svg",
+                customLogo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg",
                 iconSecours: "fa-brands fa-chrome"
             }
         ];
@@ -402,7 +402,6 @@
 
         // --- DÉTECTION ET AFFICHAGE DES ICÔNES ---
         function genererIconeHtml(lien) {
-            // Si un logo sur-mesure est spécifié
             if (lien.customLogo) {
                 return `<img src="${lien.customLogo}" alt="${lien.nom}" class="favicon" onerror="this.outerHTML='<i class=\\'${lien.iconSecours}\\'></i>'">`;
             }
