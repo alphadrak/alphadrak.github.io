@@ -8,7 +8,7 @@
     <!-- Google Fonts & FontAwesome pour les icônes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -72,12 +72,19 @@
             margin-bottom: 25px;
         }
 
-        /* --- BARRE DE RECHERCHE --- */
+        /* --- CONTENEUR RECHERCHE & BOUTON CODE --- */
+        .header-controls {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 650px;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
         .search-container {
             position: relative;
-            width: 100%;
-            max-width: 550px;
-            margin-bottom: 25px;
+            flex: 1;
         }
 
         .search-container i {
@@ -97,7 +104,7 @@
             background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(10px);
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -106,6 +113,31 @@
         .search-bar:focus {
             border-color: var(--accent-color);
             box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .btn-notes {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: var(--accent-color);
+            padding: 14px 20px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-notes:hover {
+            background: var(--accent-color);
+            color: #0b0f19;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
         }
 
         /* --- FILTRES DE CATÉGORIES --- */
@@ -239,6 +271,225 @@
         .carte-lien:hover .carte-footer span.arrow {
             transform: translateX(4px);
         }
+
+        /* --- MODAL BLOC-NOTES MULTI-ONGLETS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 15, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            width: 90%;
+            max-width: 850px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(56, 189, 248, 0.15);
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .modal-title i {
+            color: var(--accent-color);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #ef4444;
+        }
+
+        /* BARRE D'ONGLETS TYPE NAVIGATEUR */
+        .tabs-bar {
+            display: flex;
+            align-items: center;
+            background: #090d16;
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 12px 0 12px;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .tab-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            padding: 8px 14px;
+            border-radius: 8px 8px 0 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+            max-width: 180px;
+        }
+
+        .tab-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        .tab-item.active {
+            background: #1e293b;
+            color: var(--accent-color);
+            border-color: rgba(56, 189, 248, 0.4);
+            font-weight: 600;
+        }
+
+        .tab-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            outline: none;
+        }
+
+        .tab-close {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            border-radius: 50%;
+            padding: 2px 4px;
+            transition: all 0.2s;
+        }
+
+        .tab-close:hover {
+            opacity: 1;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .btn-add-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-add-tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            background: #0b1120;
+        }
+
+        .code-textarea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            outline: none;
+            resize: none;
+        }
+
+        .modal-footer {
+            padding: 12px 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .save-indicator {
+            font-size: 0.8rem;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .save-indicator.visible {
+            opacity: 1;
+        }
+
+        .btn-copy {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-color);
+            color: #0b0f19;
+        }
     </style>
 </head>
 <body>
@@ -247,9 +498,15 @@
         <div class="horloge" id="horloge">00:00</div>
         <div class="date-du-jour" id="date-du-jour">Chargement...</div>
 
-        <div class="search-container">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="recherche" class="search-bar" placeholder="Chercher un raccourci... (Appuyez sur Entrée pour ouvrir)" autocomplete="off">
+        <div class="header-controls">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="recherche" class="search-bar" placeholder="Chercher un raccourci... (Appuyez sur Entrée pour ouvrir)" autocomplete="off">
+            </div>
+            <button class="btn-notes" onclick="ouvrirModalNotes()">
+                <i class="fa-solid fa-code"></i>
+                <span>Code & Notes</span>
+            </button>
         </div>
 
         <div class="categories" id="conteneur-categories">
@@ -262,6 +519,39 @@
     </header>
 
     <main id="conteneur-liens" class="grille-liens"></main>
+
+    <!-- MODAL BLOC-NOTES MULTI-ONGLETS -->
+    <div class="modal-overlay" id="modal-notes" onclick="fermerModalSurFond(event)">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Éditeur de Snippets & Notes</span>
+                </div>
+                <button class="modal-close" onclick="fermerModalNotes()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- BARRE D'ONGLETS -->
+            <div class="tabs-bar" id="tabs-container">
+                <!-- Les onglets sont générés dynamiquement par JS -->
+                <button class="btn-add-tab" onclick="ajouterOnglet()" title="Nouvel onglet"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <textarea id="zone-code" class="code-textarea" placeholder="Collez votre code, commandes terminal, ou notes ici..." spellcheck="false"></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <div class="save-indicator" id="save-indicator">
+                    <i class="fa-solid fa-circle-check"></i> Sauvegardé automatiquement
+                </div>
+                <button class="btn-copy" onclick="copierCode()">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>Copier l'onglet actif</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // LISTE DE TES LIENS
@@ -400,7 +690,7 @@
         setInterval(mettreAJourHorloge, 1000);
         mettreAJourHorloge();
 
-        // --- DÉTECTION ET AFFICHAGE DES ICÔNES ---
+        // --- ICÔNES ---
         function genererIconeHtml(lien) {
             if (lien.customLogo) {
                 return `<img src="${lien.customLogo}" alt="${lien.nom}" class="favicon" onerror="this.outerHTML='<i class=\\'${lien.iconSecours}\\'></i>'">`;
@@ -480,15 +770,140 @@
             afficherLiens(resultatsActuels);
         }
 
-        // Écouteur pour la recherche en temps réel
         const inputRecherche = document.getElementById('recherche');
         inputRecherche.addEventListener('input', appliquerFiltres);
-
-        // Touche Entrée pour ouvrir le premier résultat
         inputRecherche.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' && resultatsActuels.length > 0) {
                 window.open(resultatsActuels[0].url, '_blank');
             }
+        });
+
+        // --- GESTION DES ONGLETS DU BLOC-NOTES ---
+        let onglets = JSON.parse(localStorage.getItem('dashboard_onglets')) || [
+            { id: 1, titre: "Code & Commandes", contenu: "// Collez vos lignes de code ou notes ici\n" }
+        ];
+        let ongletActifId = Number(localStorage.getItem('dashboard_onglet_actif')) || 1;
+        let saveTimeout;
+
+        function sauvegarderDonnees() {
+            localStorage.setItem('dashboard_onglets', JSON.stringify(onglets));
+            localStorage.setItem('dashboard_onglet_actif', ongletActifId);
+
+            const indicator = document.getElementById('save-indicator');
+            indicator.classList.add('visible');
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                indicator.classList.remove('visible');
+            }, 1500);
+        }
+
+        function rendreOnglets() {
+            const container = document.getElementById('tabs-container');
+            const btnAdd = container.querySelector('.btn-add-tab');
+
+            // Supprimer les anciens onglets
+            container.querySelectorAll('.tab-item').forEach(el => el.remove());
+
+            onglets.forEach(onglet => {
+                const tabEl = document.createElement('div');
+                tabEl.className = `tab-item ${onglet.id === ongletActifId ? 'active' : ''}`;
+                tabEl.onclick = () => changerOnglet(onglet.id);
+
+                tabEl.innerHTML = `
+                    <span class="tab-title" contenteditable="true" onblur="renommerOnglet(${onglet.id}, this.textContent)" onkeydown="intercepterEntree(event)">${onglet.titre}</span>
+                    ${onglets.length > 1 ? `<i class="fa-solid fa-xmark tab-close" onclick="supprimerOnglet(event, ${onglet.id})"></i>` : ''}
+                `;
+                container.insertBefore(tabEl, btnAdd);
+            });
+
+            // Mettre à jour la zone de texte
+            const ongletCourant = onglets.find(o => o.id === ongletActifId) || onglets[0];
+            document.getElementById('zone-code').value = ongletCourant ? ongletCourant.contenu : '';
+        }
+
+        function changerOnglet(id) {
+            ongletActifId = id;
+            rendreOnglets();
+            sauvegarderDonnees();
+        }
+
+        function ajouterOnglet() {
+            const nouvelId = Date.now();
+            onglets.push({
+                id: nouvelId,
+                titre: `Onglet ${onglets.length + 1}`,
+                contenu: ""
+            });
+            ongletActifId = nouvelId;
+            rendreOnglets();
+            sauvegarderDonnees();
+        }
+
+        function supprimerOnglet(e, id) {
+            e.stopPropagation();
+            if (onglets.length <= 1) return;
+
+            onglets = onglets.filter(o => o.id !== id);
+            if (ongletActifId === id) {
+                ongletActifId = onglets[0].id;
+            }
+            rendreOnglets();
+            sauvegarderDonnees();
+        }
+
+        function renommerOnglet(id, nouveauTitre) {
+            const onglet = onglets.find(o => o.id === id);
+            if (onglet && nouveauTitre.trim() !== '') {
+                onglet.titre = nouveauTitre.trim();
+                sauvegarderDonnees();
+            }
+        }
+
+        function intercepterEntree(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.target.blur();
+            }
+        }
+
+        // Écoute des modifications dans la zone de texte
+        document.getElementById('zone-code').addEventListener('input', (e) => {
+            const onglet = onglets.find(o => o.id === ongletActifId);
+            if (onglet) {
+                onglet.contenu = e.target.value;
+                sauvegarderDonnees();
+            }
+        });
+
+        // --- GESTION DU MODAL ---
+        function ouvrirModalNotes() {
+            rendreOnglets();
+            document.getElementById('modal-notes').classList.add('active');
+        }
+
+        function fermerModalNotes() {
+            document.getElementById('modal-notes').classList.remove('active');
+        }
+
+        function fermerModalSurFond(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                fermerModalNotes();
+            }
+        }
+
+        function copierCode() {
+            const textarea = document.getElementById('zone-code');
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                const btn = document.querySelector('.btn-copy span');
+                const origTxt = btn.textContent;
+                btn.textContent = "Copié !";
+                setTimeout(() => btn.textContent = origTxt, 2000);
+            });
+        }
+
+        // FERMETURE PAR TOUCHE ECHAP
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') fermerModalNotes();
         });
 
         // CHARGEMENT INITIAL
