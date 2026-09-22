@@ -254,9 +254,11 @@
 
         <div class="categories" id="conteneur-categories">
             <button class="btn-categorie active" onclick="filtrerCategorie('tous')">Tous</button>
+
             <button class="btn-categorie" onclick="filtrerCategorie('gaming')">Gaming</button>
             <button class="btn-categorie" onclick="filtrerCategorie('systeme')">Système & NAS</button>
             <button class="btn-categorie" onclick="filtrerCategorie('outils')">Outils & IA</button>
+            <button class="btn-categorie" onclick="filtrerCategorie('navigateurs')">Navigateurs</button>
         </div>
     </header>
 
@@ -305,13 +307,13 @@
                 description: "Mini-jeu de devinettes Valo",
                 url: "https://vlr-guessr.pages.dev/",
                 categorie: "gaming",
-                iconSecours: "fa-solid fa-Valorant"
+                iconSecours: "fa-solid fa-crosshairs"
             },
             {
                 nom: "Neal.Fun",
                 description: "Expériences & mini-jeux interactifs",
                 url: "https://neal.fun/",
-                categorie: "gaming",
+                categorie: "outils",
                 iconSecours: "fa-solid fa-wand-magic-sparkles"
             },
             {
@@ -334,13 +336,27 @@
                 url: "https://chatgpt.com",
                 categorie: "outils",
                 iconSecours: "fa-solid fa-robot"
+            },
+            {
+                nom: "Mozilla Firefox",
+                description: "Navigateur web rapide et respectueux de la vie privée",
+                url: "https://www.mozilla.org/fr/firefox/download/thanks/",
+                categorie: "navigateurs",
+                iconSecours: "fa-brands fa-firefox-browser"
+            },
+            {
+                nom: "Google Chrome",
+                description: "Installer le navigateur rapide de Google",
+                url: "https://www.google.com/intl/fr_fr/chrome/",
+                categorie: "navigateurs",
+                iconSecours: "fa-brands fa-chrome"
             }
         ];
 
         let categorieActive = 'tous';
         let resultatsActuels = [...liens];
 
-        // --- HORLOGE SANS LES SECONDES ---
+        // --- HORLOGE ---
         function mettreAJourHorloge() {
             const maintenant = new Date();
             document.getElementById('horloge').textContent = maintenant.toLocaleTimeString('fr-FR', {
